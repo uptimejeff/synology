@@ -1,0 +1,32 @@
+#!/bin/bash
+
+#set -o
+
+FILE=/var/packages/MailServer/target/etc/template/opendkim.template
+NAME=$(basename "$FILE")
+
+BACKUP=/var/services/homes/mactech/backup
+STAMP=$(date +"%Y-%m-%d_%H:%M")
+
+echo_out() { [[ -t 1 ]] && echo "$@" ; }
+
+[[ ! -d "$BACKUP" ]] && mkdir -p "$BACKUP"
+
+if grep -Eiq '^On-BadSignature\s+reject' "$FILE"; then
+  echo "# File needs repair"
+  echo "---"
+  echo "# Created backup directory"
+
+  # backup
+  mkdir -p "${BACKUP}/${STAMP}"
+  echo "# Original file backed up"
+  cp -v "$FILE" "${BACKUP}/${STAMP}/${NAME}.original"
+
+  # text replacemen function
+  text_replace() { sed -e "s/^${1}/${2}/g" "$FILE" > "${BACKUP}/${STAMP}/${NAME}.original" ; }
+  text_replace " *On-BadSignature \+reject" "On-BadSignature accept"
+  text_replace " *MinimumKeyBits \512" "MinimumKeyBits    512"
+
+else
+  echo_out OK
+fi
