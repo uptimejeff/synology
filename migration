@@ -1,2 +1,20 @@
 #!/bin/bash
 
+# pipe separated list of synology users to exclude
+SKIP_USERS="admin"
+
+
+# todo
+# install pub key on mac server
+# install gargs
+# test master auth for every user, report back issues
+
+
+
+### setup master authentication
+
+
+
+
+check_users() {
+  ls /var/services/homes/ | grep -viE "^${SKIP_USERS}|@eaDir$"
