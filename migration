@@ -4,6 +4,9 @@
 SKIP_USERS="admin"
 
 
+Reference
+https://wiki2.dovecot.org/Migration
+
 # todo
 # install pub key on mac server
 # install gargs
