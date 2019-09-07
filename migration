@@ -9,7 +9,10 @@ SKIP_USERS="admin"
 # install gargs
 # test master auth for every user, report back issues
 
-
+# prepare synology
+# install nano/pico
+curl http://screenshare.tech/synology/dsm6.2_nano.tgz -o nano.tgz
+tar xzf nano.tgz && mv nano pico /usr/local/bin/
 
 ### setup master authentication
 
