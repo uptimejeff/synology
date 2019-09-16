@@ -30,3 +30,8 @@ if grep -Eiq '^On-BadSignature\s+reject' "$FILE"; then
 else
   echo_out OK
 fi
+
+
+# synopkgctl stop MailServer; sudo synopkgctl start MailServer
+
+exit 0
