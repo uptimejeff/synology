@@ -2,8 +2,7 @@
 
 # Should be run as root from Synology Task Manager on reboot
 # 
-
-# output stderr to stdout
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/syno/sbin:/usr/syno/bin:/usr/local/sbin:/usr/local/bin
 exec 2>&1
 
 FILE=/var/tmp/nginx/smb.netbios.aliases.conf
