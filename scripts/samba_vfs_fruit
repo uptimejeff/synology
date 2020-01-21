@@ -11,6 +11,9 @@ FILE=/var/tmp/nginx/smb.netbios.aliases.conf
 # if run non-interactive, sleep for 120 seconds
 #[ -z "$PS1" ] && sleep 30
 
+echo first
+cat "$FILE"
+
 if [ ! -f "$FILE" ] ; then
   echo "VFS_FRUIT script could not run because $FILE already exists"
   cat "$FILE"
