@@ -11,23 +11,23 @@ FILE=/var/tmp/nginx/smb.netbios.aliases.conf
 # if run non-interactive, sleep for 120 seconds
 #[ -z "$PS1" ] && sleep 30
 
-echo first
-cat "$FILE"
+#echo first
+#cat "$FILE"
 
-if [ ! -f "$FILE" ] ; then
+if [ -f "$FILE" ] ; then
   echo "VFS_FRUIT script could not run because $FILE already exists"
   cat "$FILE"
   exit 1
 fi
 
-echo before
-cat "$FILE"
+#echo before
+#cat "$FILE"
 
 # Stop Samba
 /usr/syno/sbin/synoservicecfg --stop samba
 
-echo after stop
-cat "$FILE"
+#echo after stop
+#cat "$FILE"
 
 
 sleep 10
@@ -43,8 +43,8 @@ fruit:resource = file" >> "$FILE"
 # Start Samba
 /usr/syno/sbin/synoservicecfg --start samba
 
-echo after start
-cat "$FILE"
+#echo after start
+#cat "$FILE"
 
 exit
 
