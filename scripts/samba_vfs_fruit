@@ -8,10 +8,12 @@ exec 2>&1
 FILE=/var/tmp/nginx/smb.netbios.aliases.conf
 
 # if run non-interactive, sleep for 120 seconds
-if [ -z "$PS1" ]; then
- /usr/syno/sbin/synoservicecfg --stop samba
- sleep 120
- echo "Waited 2 minutes"
+if shopt -q login_shell ; then
+  echo "Script run from login shell"
+else
+  /usr/syno/sbin/synoservicecfg --stop samba
+   sleep 120
+   echo "Script run non-interactive, waiting 2 minutes"
 fi
  
 
