@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# https://tech.setepontos.com/2019/02/04/fixing-slow-macos-finder-smb-browsing-on-synology-file-shares-using-samba-vfs_fruit/
+
+# output stderr to stdout
+exec 2>&1
+
+
+# enable debug
+set -xv  
+
+# if run non-interactive, sleep for 120 seconds
+[ -z "$PS1" ] && sleep 120
+
+FILE=/var/tmp/nginx/smb.netbios.aliases.conf
+
+if [ ! -f "$FILE" ] ; then
+  echo "VFS_FRUIT script could not run because $FILE already exists"
+  exit 1
+fi
+
+
+# Stop Samba
+/usr/syno/sbin/synoservicecfg --stop samba
+
+sleep 10
+
+# Create the new conf file if it doesn't exist
+echo "vfs objects = fruit
+fruit:aapl = yes
+fruit:encoding = native
+fruit:locking = none
+fruit:metadata = stream
+fruit:resource = file" > "$FILE"
+
+# Start Samba
+/usr/syno/sbin/synoservicecfg --start samba
+
+echo
+echo
+echo --------------------------------------
+echo
+echo "kstreet.npc.org was rebooted and the Samba script was run."
+echo
+echo "cat $FILE"
+echo ----
+cat "$FILE"
+
+exit 0
